@@ -7,6 +7,7 @@ class DB
 {
     public string $host;
     public string $dbname;
+
     public string $user;
     public string $password;
     public PDO $conn;

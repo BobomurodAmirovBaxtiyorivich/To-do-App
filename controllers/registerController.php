@@ -1,9 +1,4 @@
 <?php
-
-if (!isset($_SESSION['user'])){
-    header('Location: /log_in');
-}
-
 $user = new App\User();
 
 if (isset($_POST['sub'])){

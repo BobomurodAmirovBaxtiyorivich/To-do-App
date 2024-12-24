@@ -11,9 +11,6 @@
                     <li class="nav-item">
                         <a class="nav-link active add-todos" aria-current="page" href="/add-todos">Add todos</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link active add-todos" aria-current="page" href="/telegram">Telegram bot</a>
-                    </li>
                 </ul>
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li class="dropdown">
@@ -29,6 +26,7 @@
                             <li><a class="dropdown-item" href="/todos">To-do List</a></li>
                             <li><a class="dropdown-item" href="/todos"><?= $_SESSION['user']['full_name'] ?? '' ?></a></li>
                             <li><a class="dropdown-item" href="/todos"><?= $_SESSION['user']['email'] ?? '' ?></a></li>
+                            <li><a class="dropdown-item" href="https://t.me/TheBoyCreatedThisTodoAppBot?start=<?= $_SESSION['user']['id']?>" target="_blank">Open telegram bot</a></li>
                             <li><a class="dropdown-item" href="/log_out">Log out</a></li>
                         </ul>
                     </li>
