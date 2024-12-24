@@ -54,6 +54,32 @@ class Bot{
         }
     }
 
+    public function setTodoButtons(int $todoID, int $callback_chat_id, int $callback_message_id): void
+    {
+        $todo = (new Todo())->getTodo($todoID);
+
+        try {
+            $this->makeRequest('editMessageText', [
+                'chat_id' => $callback_chat_id,
+                'message_id' => $callback_message_id,
+                'text' => "Todo number: " . $todoID . "\n\n" . "Title = " . $todo['title'] . "\n" . "Status = " . $todo['status'] . "\n" . "Due date = " . $todo['due_date'],
+                'reply_markup' => json_encode([
+                    'inline_keyboard' => [
+                        [
+                            ['callback_data' => 'complete_' . $todoID, 'text' => 'Complete'],
+                            ['callback_data' => 'in_progress_' . $todoID, 'text' => 'In progress'],
+                            ['callback_data' => 'pending_' . $todoID, 'text' => 'Pending']
+                        ],
+                        [
+                            ['callback_data' => 'edit_' . $todoID, 'text' => 'Edit']
+                        ]
+                    ]
+                ])
+            ]);
+        } catch (\GuzzleHttp\Exception\GuzzleException $e) {
+
+        }
+    }
     public function prepareButtons(int $chat_id): array
     {
         $result = $this->getUserTodos($chat_id);

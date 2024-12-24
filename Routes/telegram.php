@@ -24,71 +24,26 @@ $callback_message_id = $callback_query->message->message_id;
 if ($callback_query){
     if (mb_stripos($callback_data, 'todo_') !== false){
         $todoID = explode('todo_', $callback_data)[1];
-        $todo = (new Todo())->getTodo($todoID);
-        try {
-            $bot->makeRequest('editMessageText', [
-                'chat_id' => $callback_chat_id,
-                'message_id' => $callback_message_id,
-                'text' => "Todo number: " . $todoID . "\n\n" . "Title = " . $todo['title'] . "\n" . "Status = " . $todo['status'] . "\n" . "Due date = " . $todo['due_date'],
-                'reply_markup' => json_encode([
-                    'inline_keyboard' => [
-                        [
-                            ['callback_data' => 'complete_' . $todoID, 'text' => 'Complete'],
-                            ['callback_data' => 'in_progress_' . $todoID, 'text' => 'In progress'],
-                            ['callback_data' => 'pending_' . $todoID, 'text' => 'Pending']
-                        ]
-                    ]
-                ])
-            ]);
-        } catch (\GuzzleHttp\Exception\GuzzleException $e) {
-
-        }
+        (new Bot())->setTodoButtons($todoID, $callback_chat_id, $callback_message_id);
     }
 
     if (mb_stripos($callback_data, 'in_progress_') !== false){
         $todoID = explode('in_progress_', $callback_data)[1];
         (new Todo())->Start($todoID);
-        $todo = (new Todo())->getTodo($todoID);
-        try {
-            $bot->makeRequest('editMessageText', [
-                'chat_id' => $callback_chat_id,
-                'message_id' => $callback_message_id,
-                'text' => "Todo number: " . $todoID . "\n\n" . "Title = " . $todo['title'] . "\n" . "Status = " . $todo['status'] . "\n" . "Due date = " . $todo['due_date']
-            ]);
-        } catch (\GuzzleHttp\Exception\GuzzleException $e) {
-
-        }
+        (new Bot())->setTodoButtons($todoID, $callback_chat_id, $callback_message_id);
 
     }
 
     if (mb_stripos($callback_data, 'complete_') !== false){
         $todoID = explode('complete_', $callback_data)[1];
         (new Todo())->Complete($todoID);
-        $todo = (new Todo())->getTodo($todoID);
-        try {
-            $bot->makeRequest('editMessageText', [
-                'chat_id' => $callback_chat_id,
-                'message_id' => $callback_message_id,
-                'text' => "Todo number: " . $todoID . "\n\n" . "Title = " . $todo['title'] . "\n" . "Status = " . $todo['status'] . "\n" . "Due date = " . $todo['due_date']
-            ]);
-        } catch (\GuzzleHttp\Exception\GuzzleException $e) {
-
-        }
+        (new Bot())->setTodoButtons($todoID, $callback_chat_id, $callback_message_id);
     }
 
     if (mb_stripos($callback_data, 'pending_') !== false){
         $todoID = explode('pending_', $callback_data)[1];
         (new Todo())->Pending($todoID);
-        $todo = (new Todo())->getTodo($todoID);
-        try {
-            $bot->makeRequest('editMessageText', [
-                'chat_id' => $callback_chat_id,
-                'message_id' => $callback_message_id,
-                'text' => "Todo number: " . $todoID . "\n\n" . "Title = " . $todo['title'] . "\n" . "Status = " . $todo['status'] . "\n" . "Due date = " . $todo['due_date']
-            ]);
-        } catch (\GuzzleHttp\Exception\GuzzleException $e) {
-
-        }
+        (new Bot())->setTodoButtons($todoID, $callback_chat_id, $callback_message_id);
     }
 }
 
